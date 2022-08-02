@@ -1,12 +1,15 @@
 <?php
 
-require 'vendor/autoload.php';
+namespace WombatInvest\GetAddress\Tests;
 
-class AddressTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+use WombatInvest\GetAddress\Address;
+
+class AddressTest extends TestCase
 {
     public function testCreateAddress()
     {
-        $address = new \petelawrence\getaddress\Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town', 'Postal Town', 'County');
+        $address = new Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town', 'Postal Town', 'County');
         $this->assertEquals('Addr1', $address->getLine1());
         $this->assertEquals('Addr2', $address->getLine2());
         $this->assertEquals('Addr3', $address->getLine3());
@@ -19,21 +22,21 @@ class AddressTest extends PHPUnit_Framework_TestCase
 
     public function testGetNormalisedTown1()
     {
-        $address = new \petelawrence\getaddress\Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town', 'Postal Town');
+        $address = new Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town', 'Postal Town');
         $this->assertEquals('Town', $address->getNormalisedTown());
     }
 
 
     public function testGetNormalisedTown2()
     {
-        $address = new \petelawrence\getaddress\Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town');
+        $address = new Address('Addr1', 'Addr2', 'Addr3', 'Addr4', 'Town');
         $this->assertEquals('Town', $address->getNormalisedTown());
     }
 
 
     public function testGetNormalisedTown3()
     {
-        $address = new \petelawrence\getaddress\Address('Addr1', 'Addr2', 'Addr3', 'Addr4', '', 'Postal Town');
+        $address = new Address('Addr1', 'Addr2', 'Addr3', 'Addr4', '', 'Postal Town');
         $this->assertEquals('Postal Town', $address->getNormalisedTown());
     }
 }
