@@ -1,15 +1,11 @@
 <?php
 
-namespace petelawrence\getaddress;
+namespace WombatInvest\GetAddress;
 
 class GetAddressResponse
 {
-
-
     private $longitude;
-
     private $latitude;
-
     private $addresses;
 
 

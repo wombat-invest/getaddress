@@ -1,6 +1,6 @@
 <?php
 
-namespace petelawrence\getaddress;
+namespace WombatInvest\GetAddress;
 
 /**
  * An individual address returned from the getaddress.io API
@@ -140,6 +140,15 @@ class Address
 
     public function toCsv()
     {
-        return sprintf('%s,%s,%s,%s,%s,%s,%s', $this->getLine1(), $this->getLine2(), $this->getLine3(), $this->getLine4(), $this->getTown(), $this->getPostalTown(), $this->getCounty());
+        return sprintf(
+            '%s,%s,%s,%s,%s,%s,%s',
+            $this->getLine1(),
+            $this->getLine2(),
+            $this->getLine3(),
+            $this->getLine4(),
+            $this->getTown(),
+            $this->getPostalTown(),
+            $this->getCounty()
+        );
     }
 }
