@@ -1,6 +1,10 @@
 <?php
 
-namespace petelawrence\getaddress;
+namespace WombatInvest\GetAddress;
+
+use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class GetAddressClient
 {
@@ -9,7 +13,7 @@ class GetAddressClient
     public function __construct($apiKey)
     {
         if ($apiKey == '') {
-            throw new \Exception('No apiKey provided');
+            throw new Exception('No apiKey provided');
         }
 
         $this->apiKey = $apiKey;
@@ -22,31 +26,29 @@ class GetAddressClient
      * @param string $postcode       The postcode to return houses for
      * @param string $houseNumOrName If supplied will limit results to those that contain this value
      *
-     * @return petelawrence\getaddress\Address[]
+     * @return GetAddressResponse
      */
     public function lookup($postcode, $houseNumOrName = '')
     {
         //Create a new Guzzle client
-        $guzzleClient = new \GuzzleHttp\Client(
-            [
-                'base_uri' => 'https://api.getAddress.io/v2/uk/'
-            ]
-        );
+        $guzzleClient = new Client(['base_uri' => 'https://api.getAddress.io/v2/uk/']);
 
         //Perform the query
         try {
             $response = $guzzleClient->get(
                 sprintf('%s/%s', $postcode, $houseNumOrName),
                 [
-                    'auth'=> ['api-key', $this->apiKey]
+                    'auth' => ['api-key', $this->apiKey]
                 ]
             );
-        } catch (\Exception $e) {
+        } catch (ClientException $e) {
             if ($e->getResponse()->getStatusCode() == 401) {
                 throw new GetAddressAuthenticationException('getaddress.io authentication failed');
             }
 
             //Default exception
+            throw new GetAddressLookupException('An error occurred performing the lookup');
+        } catch (Exception $e) {
             throw new GetAddressLookupException('An error occurred performing the lookup');
         }
 
@@ -61,7 +63,7 @@ class GetAddressClient
         //Convert the response from JSON into an object
         $responseObj = json_decode($response);
 
-        $getAddressResponse = new \petelawrence\getaddress\GetAddressResponse();
+        $getAddressResponse = new GetAddressResponse();
 
         //Set the longitude and latitude fields
         $getAddressResponse->setLongitude($responseObj->Longitude);

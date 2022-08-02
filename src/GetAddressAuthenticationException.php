@@ -1,8 +1,10 @@
 <?php
 
-namespace petelawrence\getaddress;
+namespace WombatInvest\GetAddress;
 
-class GetAddressAuthenticationException extends \Exception
+use Exception;
+
+class GetAddressAuthenticationException extends Exception
 {
     public function __construct($message = null, $code = 0, Exception $previous = null)
     {
