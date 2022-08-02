@@ -25,7 +25,7 @@
         "sebastian/environment": "1.0.*@dev",
         "theseer/phpdox": "~0",
         "sebastian/phpcpd": "2.0.*",
-        "phpmd/phpmd": "dev-master",
+        "phpmd/phpmd": "^2.0",
         "pdepend/pdepend": "2.0.*",
         "phploc/phploc": "2.0.*@dev",
         "instaclick/php-code-sniffer": "~1"
